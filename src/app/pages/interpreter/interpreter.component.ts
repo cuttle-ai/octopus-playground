@@ -41,7 +41,7 @@ export class InterpreterComponent implements OnInit {
     }
 
     query(searchQuery: string) {
-        this.http.post('/api/v1/interpret', { query: { nl: searchQuery } }).subscribe((data: Query) => {
+        this.http.post('/api/v1/interpret', { nl: searchQuery }).subscribe((data: Query) => {
             if (!data.Select) {
                 this.queryResult = { Select: [] };
                 return;
@@ -53,7 +53,7 @@ export class InterpreterComponent implements OnInit {
     }
 
     setRuleDisableState(pos: number, grpPos: number, state: boolean) {
-        this.http.post('/api/v1/rules/state', { params: { position: pos, group_position: grpPos, disabled_state: state } }).subscribe((data: Query) => {
+        this.http.post('/api/v1/rules/state', { position: pos, group_position: grpPos, disabled_state: state }).subscribe((data: Query) => {
         });
     }
 }
