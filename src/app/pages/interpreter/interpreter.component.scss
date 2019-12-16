@@ -1,0 +1,19 @@
+.rule-group {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+}
+
+.search-box {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+}
+
+.submit-button {
+    margin-top: 10px;
+}
+
+.result-fields {
+    font-weight: bold;
+}

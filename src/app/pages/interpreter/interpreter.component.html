@@ -1,0 +1,58 @@
+<nb-layout>
+    <nb-layout-column>
+        <nb-card>
+            <nb-card-header>
+                Rules
+            </nb-card-header>
+            <nb-card-body>
+                <nb-list>
+                    <nb-list-item *ngFor="let rulegroup of rules; let rulePos = index" class="rule-group">
+                        <h6>{{rulegroup.Tag}}</h6>
+                        <nb-list>
+                            <nb-list-item *ngFor="let rule of rulegroup.Rules; let pos = index">
+                                <div>
+                                    <nb-checkbox status="basic" [(ngModel)]="rule.Enabled"
+                                        (change)="setRuleDisableState(rulePos, pos, !rule.Enabled)">
+                                        {{rule.Name}} - {{rule.Description}}
+                                    </nb-checkbox>
+                                </div>
+                            </nb-list-item>
+                        </nb-list>
+                    </nb-list-item>
+                </nb-list>
+            </nb-card-body>
+        </nb-card>
+        <nb-card *ngIf="dictkeys">
+            <nb-card-header>
+                Dictionary
+            </nb-card-header>
+            <nb-card-body>
+                <nb-list>
+                    <nb-list-item *ngFor="let item of dictkeys">
+                        <div>{{item}}</div>
+                    </nb-list-item>
+                </nb-list>
+            </nb-card-body>
+        </nb-card>
+    </nb-layout-column>
+    <nb-layout-column>
+        <nb-card>
+            <nb-card-header>
+                <form class="search-box">
+                    <input type="text" nbInput fullWidth status="success" placeholder="Search" #searchQuery>
+                    <button nbButton (click)="query(searchQuery.value)" class="submit-button">Search</button>
+                </form>
+            </nb-card-header>
+            <nb-card-body>
+                <section *ngIf="queryResult">
+                    <span>Selected</span>
+                    <nb-list>
+                        <nb-list-item *ngFor="let field of queryResult.Select" class="result-fields">
+                            {{field.DictWord}}
+                        </nb-list-item>
+                    </nb-list>
+                </section>
+            </nb-card-body>
+        </nb-card>
+    </nb-layout-column>
+</nb-layout>
