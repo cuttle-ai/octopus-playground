@@ -66,6 +66,22 @@
                             </div>
                         </nb-list-item>
                     </nb-list>
+                    <span>Filters</span>
+                    <nb-list>
+                        <nb-list-item *ngFor="let operator of queryResult.filters" class="result-fields">
+                            <div class="name-holder margin-right">
+                                <span>{{operator.column.word}}</span>
+                                <span class="badge {{operator.column.type}}">{{operator.column.type}}</span>
+                            </div>
+                            <div class="name-holder margin-right">
+                                <span>{{operator.word}}</span>
+                            </div>
+                            <div class="name-holder">
+                                <span>{{operator.unknown.word}}</span>
+                                <span class="badge {{operator.unknown.type}}">{{operator.unknown.type}}</span>
+                            </div>
+                        </nb-list-item>
+                    </nb-list>
                 </section>
             </nb-card-body>
         </nb-card>

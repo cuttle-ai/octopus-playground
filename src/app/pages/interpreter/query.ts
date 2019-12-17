@@ -4,4 +4,5 @@ import { Node } from './dict';
 export interface Query {
     select?: Node[];
     group_by?: Node[];
+    filters?: Node[];
 }
