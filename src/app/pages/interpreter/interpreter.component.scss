@@ -1,3 +1,6 @@
+
+@import '../../../themes';
+
 .rule-group {
     display: flex;
     flex-direction: column;
@@ -16,4 +19,26 @@
 
 .result-fields {
     font-weight: bold;
+}
+
+.name-holder {
+    display: flex;
+    font-size: 20px;
+}
+
+.badge {
+    font-size: 7px;
+    margin-left: 5px;
+    border-radius: 3px;
+    padding: 0px 5px;
+}
+
+.badge.Column {
+    background-color: nb-theme(background-alternative-color-1);
+    color: white;
+}
+
+.badge.Value {
+    background-color: nb-theme(background-primary-color-4);
+    color: white;
 }

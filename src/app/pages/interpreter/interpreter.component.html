@@ -29,7 +29,10 @@
             <nb-card-body>
                 <nb-list>
                     <nb-list-item *ngFor="let item of dictkeys">
-                        <div>{{item}}</div>
+                        <div class="name-holder">
+                            <span>{{item}}</span>
+                            <span class="badge {{dict.Map[item].Nodes[0].type}}">{{dict.Map[item].Nodes[0].type}}</span>
+                        </div>
                     </nb-list-item>
                 </nb-list>
             </nb-card-body>
@@ -47,8 +50,20 @@
                 <section *ngIf="queryResult">
                     <span>Selected</span>
                     <nb-list>
-                        <nb-list-item *ngFor="let field of queryResult.Select" class="result-fields">
-                            {{field.DictWord}}
+                        <nb-list-item *ngFor="let field of queryResult.select" class="result-fields">
+                            <div class="name-holder">
+                                <span>{{field.word}}</span>
+                                <span class="badge {{field.type}}">{{field.type}}</span>
+                            </div>
+                        </nb-list-item>
+                    </nb-list>
+                    <span>Group By</span>
+                    <nb-list>
+                        <nb-list-item *ngFor="let field of queryResult.group_by" class="result-fields">
+                            <div class="name-holder">
+                                <span>{{field.word}}</span>
+                                <span class="badge {{field.type}}">{{field.type}}</span>
+                            </div>
                         </nb-list-item>
                     </nb-list>
                 </section>

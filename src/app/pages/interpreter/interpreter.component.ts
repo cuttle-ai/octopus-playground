@@ -42,13 +42,7 @@ export class InterpreterComponent implements OnInit {
 
     query(searchQuery: string) {
         this.http.post('/api/v1/interpret', { nl: searchQuery }).subscribe((data: Query) => {
-            if (!data.Select) {
-                this.queryResult = { Select: [] };
-                return;
-            }
-            this.queryResult = Object.assign({}, data, {
-                Select: data.Select.map(field => Object.assign({}, field, { DictWord: String.fromCharCode(...field.Word) }))
-            });
+            this.queryResult = data;
         });
     }
 
