@@ -1,0 +1,23 @@
+pipeline:
+    build:
+      image: node:10.9.0
+      commands:
+        - node -v
+        - npm -v
+        - npm install -g @angular/cli && npm i 
+        - ng build
+  
+    deploy:
+      image: appleboy/drone-scp
+      host:
+        - play.octopus.cuttle.ai
+      port: 22
+      username:
+        from_secret: scp-username
+      target: /var/www/html/play.octopus
+      key: 
+        from_secret: ssh_key
+      source:
+        - "dist/*"
+      when:
+        branch: master

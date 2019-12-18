@@ -1,4 +1,4 @@
-# OctopusPlayground
+# OctopusPlayground[![Build Status](https://ci.cuttle.ai/api/badges/cuttle-ai/octopus-playground/status.svg)](https://ci.cuttle.ai/cuttle-ai/octopus-playground)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.2.
 
