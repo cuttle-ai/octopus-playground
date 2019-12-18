@@ -1,4 +1,9 @@
 <nb-layout>
+    <nb-layout-header>
+        Since using LSP server, all the users are sharing same session. So results might be undesired. Please check the
+        enabled rules after each query to verify the result.
+        Local instance of the playground will produce more consistent results.
+    </nb-layout-header>
     <nb-layout-column>
         <nb-card>
             <nb-card-header>
@@ -7,13 +12,13 @@
             <nb-card-body>
                 <nb-list>
                     <nb-list-item *ngFor="let rulegroup of rules; let rulePos = index" class="rule-group">
-                        <h6>{{rulegroup.Tag}}</h6>
+                        <h6>{{rulegroup.tag}}</h6>
                         <nb-list>
-                            <nb-list-item *ngFor="let rule of rulegroup.Rules; let pos = index">
+                            <nb-list-item *ngFor="let rule of rulegroup.rules; let pos = index">
                                 <div>
                                     <nb-checkbox status="basic" [(ngModel)]="rule.Enabled"
                                         (change)="setRuleDisableState(rulePos, pos, !rule.Enabled)">
-                                        {{rule.Name}} - {{rule.Description}}
+                                        {{rule.name}} - {{rule.description}}
                                     </nb-checkbox>
                                 </div>
                             </nb-list-item>
@@ -51,6 +56,10 @@
                     <span>Selected</span>
                     <nb-list>
                         <nb-list-item *ngFor="let field of queryResult.select" class="result-fields">
+                            <div class="name-holder margin-right"
+                                *ngIf="queryResult.group_by && queryResult.group_by.length > 0">
+                                <span>{{field.aggregation_fn}}</span>
+                            </div>
                             <div class="name-holder">
                                 <span>{{field.word}}</span>
                                 <span class="badge {{field.type}}">{{field.type}}</span>
@@ -76,9 +85,13 @@
                             <div class="name-holder margin-right">
                                 <span>{{operator.word}}</span>
                             </div>
-                            <div class="name-holder">
+                            <div class="name-holder" *ngIf="operator.unknown">
                                 <span>{{operator.unknown.word}}</span>
                                 <span class="badge {{operator.unknown.type}}">{{operator.unknown.type}}</span>
+                            </div>
+                            <div class="name-holder" *ngIf="operator.value">
+                                <span>{{operator.value.word}}</span>
+                                <span class="badge {{operator.value.type}}">{{operator.value.type}}</span>
                             </div>
                         </nb-list-item>
                     </nb-list>

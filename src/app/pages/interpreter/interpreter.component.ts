@@ -19,19 +19,21 @@ export class InterpreterComponent implements OnInit {
 
     constructor(private http: HttpClient) { }
 
+    private rgMap = ruleGroup => {
+        return {
+            rules: ruleGroup.rules.map(rule => {
+                return Object.assign({}, rule, { Enabled: !rule.disabled })
+            }),
+            tag: ruleGroup.tag,
+        }
+    }
+
     /**
      * will init the rules
      */
     ngOnInit() {
         this.http.get('/api/v1/rules').subscribe((data: RuleGroup[]) => {
-            this.rules = data.map(ruleGroup => {
-                return {
-                    Rules: ruleGroup.Rules.map(rule => {
-                        return Object.assign({}, rule, { Enabled: !rule.Disabled })
-                    }),
-                    Tag: ruleGroup.Tag,
-                }
-            });
+            this.rules = data.map(this.rgMap);
         });
 
         this.http.get('/api/v1/dict').subscribe((data: Dict) => {
@@ -43,6 +45,10 @@ export class InterpreterComponent implements OnInit {
     query(searchQuery: string) {
         this.http.post('/api/v1/interpret', { nl: searchQuery }).subscribe((data: Query) => {
             this.queryResult = data;
+        });
+
+        this.http.get('/api/v1/rules').subscribe((data: RuleGroup[]) => {
+            this.rules = data.map(this.rgMap);
         });
     }
 

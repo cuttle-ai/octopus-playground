@@ -1,11 +1,12 @@
 export interface Rule {
-    Name: string;
-    Description: string;
-    Disabled: boolean;
+    name: string;
+    description: string;
+    disabled: boolean;
+    enabled?: boolean;
 }
 
 //RuleGroup will contain a list of rules
 export interface RuleGroup {
-    Rules: Rule[];
-    Tag: string;
+    rules: Rule[];
+    tag: string;
 }
