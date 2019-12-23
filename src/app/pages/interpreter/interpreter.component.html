@@ -1,102 +1,160 @@
 <nb-layout>
-    <nb-layout-header>
-        Since using LSP server, all the users are sharing same session. So results might be undesired. Please check the
-        enabled rules after each query to verify the result.
-        Local instance of the playground will produce more consistent results.
-    </nb-layout-header>
-    <nb-layout-column>
-        <nb-card>
-            <nb-card-header>
-                Rules
-            </nb-card-header>
-            <nb-card-body>
-                <nb-list>
-                    <nb-list-item *ngFor="let rulegroup of rules; let rulePos = index" class="rule-group">
-                        <h6>{{rulegroup.tag}}</h6>
-                        <nb-list>
-                            <nb-list-item *ngFor="let rule of rulegroup.rules; let pos = index">
-                                <div>
-                                    <nb-checkbox status="basic" [(ngModel)]="rule.Enabled"
-                                        (change)="setRuleDisableState(rulePos, pos, !rule.Enabled)">
-                                        {{rule.name}} - {{rule.description}}
-                                    </nb-checkbox>
-                                </div>
-                            </nb-list-item>
-                        </nb-list>
-                    </nb-list-item>
-                </nb-list>
-            </nb-card-body>
-        </nb-card>
-        <nb-card *ngIf="dictkeys">
-            <nb-card-header>
-                Dictionary
-            </nb-card-header>
-            <nb-card-body>
-                <nb-list>
-                    <nb-list-item *ngFor="let item of dictkeys">
-                        <div class="name-holder">
-                            <span>{{item}}</span>
-                            <span class="badge {{dict.Map[item].Nodes[0].type}}">{{dict.Map[item].Nodes[0].type}}</span>
-                        </div>
-                    </nb-list-item>
-                </nb-list>
-            </nb-card-body>
-        </nb-card>
-    </nb-layout-column>
-    <nb-layout-column>
-        <nb-card>
-            <nb-card-header>
-                <form class="search-box">
-                    <input type="text" nbInput fullWidth status="success" placeholder="Search" #searchQuery>
-                    <button nbButton (click)="query(searchQuery.value)" class="submit-button">Search</button>
-                </form>
-            </nb-card-header>
-            <nb-card-body>
-                <section *ngIf="queryResult">
-                    <span>Selected</span>
-                    <nb-list>
-                        <nb-list-item *ngFor="let field of queryResult.select" class="result-fields">
-                            <div class="name-holder margin-right"
-                                *ngIf="queryResult.group_by && queryResult.group_by.length > 0">
-                                <span>{{field.aggregation_fn}}</span>
-                            </div>
-                            <div class="name-holder">
-                                <span>{{field.word}}</span>
-                                <span class="badge {{field.type}}">{{field.type}}</span>
-                            </div>
-                        </nb-list-item>
-                    </nb-list>
-                    <span>Group By</span>
-                    <nb-list>
-                        <nb-list-item *ngFor="let field of queryResult.group_by" class="result-fields">
-                            <div class="name-holder">
-                                <span>{{field.word}}</span>
-                                <span class="badge {{field.type}}">{{field.type}}</span>
-                            </div>
-                        </nb-list-item>
-                    </nb-list>
-                    <span>Filters</span>
-                    <nb-list>
-                        <nb-list-item *ngFor="let operator of queryResult.filters" class="result-fields">
-                            <div class="name-holder margin-right">
-                                <span>{{operator.column.word}}</span>
-                                <span class="badge {{operator.column.type}}">{{operator.column.type}}</span>
-                            </div>
-                            <div class="name-holder margin-right">
-                                <span>{{operator.word}}</span>
-                            </div>
-                            <div class="name-holder" *ngIf="operator.unknown">
-                                <span>{{operator.unknown.word}}</span>
-                                <span class="badge {{operator.unknown.type}}">{{operator.unknown.type}}</span>
-                            </div>
-                            <div class="name-holder" *ngIf="operator.value">
-                                <span>{{operator.value.word}}</span>
-                                <span class="badge {{operator.value.type}}">{{operator.value.type}}</span>
-                            </div>
-                        </nb-list-item>
-                    </nb-list>
-                </section>
-            </nb-card-body>
-        </nb-card>
-    </nb-layout-column>
+  <nb-layout-header>
+    Since using LSP server, all the users are sharing same session. So results
+    might be undesired. Please check the enabled rules after each query to
+    verify the result. Local instance of the playground will produce more
+    consistent results.
+  </nb-layout-header>
+  <nb-layout-column>
+    <nb-card>
+      <nb-card-header>
+        Rules
+      </nb-card-header>
+      <nb-card-body>
+        <nb-list>
+          <nb-list-item
+            *ngFor="let rulegroup of rules; let rulePos = index"
+            class="rule-group"
+          >
+            <h6>{{ rulegroup.tag }}</h6>
+            <nb-list>
+              <nb-list-item
+                *ngFor="let rule of rulegroup.rules; let pos = index"
+              >
+                <div>
+                  <nb-checkbox
+                    status="basic"
+                    [(ngModel)]="rule.Enabled"
+                    (change)="setRuleDisableState(rulePos, pos, !rule.Enabled)"
+                  >
+                    {{ rule.name }} - {{ rule.description }}
+                  </nb-checkbox>
+                </div>
+              </nb-list-item>
+            </nb-list>
+          </nb-list-item>
+        </nb-list>
+      </nb-card-body>
+    </nb-card>
+    <nb-card *ngIf="dictkeys">
+      <nb-card-header>
+        Dictionary
+      </nb-card-header>
+      <nb-card-body>
+        <nb-list>
+          <nb-list-item *ngFor="let item of dictkeys">
+            <div class="name-holder">
+              <span>{{ item }}</span>
+              <span class="badge {{ dict.Map[item].Nodes[0].type }}">{{
+                dict.Map[item].Nodes[0].type
+              }}</span>
+            </div>
+          </nb-list-item>
+        </nb-list>
+      </nb-card-body>
+    </nb-card>
+  </nb-layout-column>
+  <nb-layout-column>
+    <nb-card>
+      <nb-card-header>
+        <form class="search-box">
+          <input
+            type="text"
+            nbInput
+            fullWidth
+            status="success"
+            placeholder="Search"
+            #searchQuery
+          />
+          <button
+            nbButton
+            (click)="query(searchQuery.value)"
+            class="submit-button"
+          >
+            Search
+          </button>
+        </form>
+      </nb-card-header>
+      <nb-card-body>
+        <section *ngIf="queryResult">
+          <span>Selected</span>
+          <nb-list>
+            <nb-list-item
+              *ngFor="let field of queryResult.select"
+              class="result-fields"
+            >
+              <div
+                class="name-holder margin-right"
+                *ngIf="queryResult.group_by && queryResult.group_by.length > 0"
+              >
+                <span>{{ field.aggregation_fn }}</span>
+              </div>
+              <div class="name-holder">
+                <span>{{ field.word }}</span>
+                <span class="badge {{ field.type }}">{{ field.type }}</span>
+              </div>
+            </nb-list-item>
+          </nb-list>
+          <span>Group By</span>
+          <nb-list>
+            <nb-list-item
+              *ngFor="let field of queryResult.group_by"
+              class="result-fields"
+            >
+              <div class="name-holder">
+                <span>{{ field.word }}</span>
+                <span class="badge {{ field.type }}">{{ field.type }}</span>
+              </div>
+            </nb-list-item>
+          </nb-list>
+          <span>Filters</span>
+          <nb-list>
+            <nb-list-item
+              *ngFor="let operator of queryResult.filters"
+              class="result-fields"
+            >
+              <div class="name-holder margin-right">
+                <span>{{ operator.column.word }}</span>
+                <span class="badge {{ operator.column.type }}">{{
+                  operator.column.type
+                }}</span>
+              </div>
+              <div class="name-holder margin-right">
+                <span>{{ operator.word }}</span>
+              </div>
+              <div class="name-holder" *ngIf="operator.unknown">
+                <span>{{ operator.unknown.word }}</span>
+                <span class="badge {{ operator.unknown.type }}">{{
+                  operator.unknown.type
+                }}</span>
+              </div>
+              <div class="name-holder" *ngIf="operator.value">
+                <span>{{ operator.value.word }}</span>
+                <span class="badge {{ operator.value.type }}">{{
+                  operator.value.type
+                }}</span>
+              </div>
+              <div class="name-holder" *ngIf="operator.time">
+                <!-- in case of value-->
+                <span *ngIf="operator.time.value.value">{{
+                  operator.time.value.value.format("MMM Do YY")
+                }}</span>
+                <!-- in case of from interval-->
+                <span *ngIf="operator.time.value.from">{{
+                  operator.time.value.from.value.format("MMM Do YY")
+                }}</span>
+                <!-- in case of to interval-->
+                <span *ngIf="operator.time.value.to">{{
+                  operator.time.value.to.value.format("MMM Do YY")
+                }}</span>
+                <span class="badge {{ operator.time.type }}">{{
+                  operator.time.type
+                }}</span>
+              </div>
+            </nb-list-item>
+          </nb-list>
+        </section>
+      </nb-card-body>
+    </nb-card>
+  </nb-layout-column>
 </nb-layout>
